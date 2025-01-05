@@ -53,10 +53,14 @@ def evaluate_models(X_train, y_train,X_test,y_test,models,param):
     except Exception as e:
         raise CustomException(e, sys)
     
+
 def load_object(file_path):
     try:
         with open(file_path, "rb") as file_obj:
-            return pickle.load(file_obj)
-
+            return pickle.load(file_obj)  # Use pickle.load instead of dill.load
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        raise
     except Exception as e:
-        raise CustomException(e, sys)
+        print(f"Error loading the object from {file_path}: {e}")
+        raise
